@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sockets</title>
+  <style>
+    #connectContainer, #resultsContainer {
+      padding: 20px;
+      background-color: #FFF;
+    }
+</style>
+</head>
+
+<body>
+  <div id="connectContainer">
+    <h3>Host</h3>
+    <input id="hostInput" type="text" value="ws://echo.websocket.org"></input>
+    <button onClick="connect()">Connect</button>
+  </div>
+  <div id="resultsContainer" style="display: none">
+    <h3>Input</h3>
+    <input id="inputBox" type="text"/>
+    <button onClick="send()">Send</button>
+    <h3>Output</h3>
+    <div id="container"/>
+  </div>
+  <script>
+
+    var connection;
+
+    function log(s) {
+      var container = document.getElementById("container");
+      var para = document.createElement("p");
+      var node = document.createTextNode(s);
+      para.appendChild(node);
+      container.appendChild(para);
+    }
+
+    function send() {
+      var input = document.getElementById("inputBox").value;
+      connection.send(input);
+      log("Client: " + input);
+    }
+
+    function showOutput() {
+      document.getElementById("connectContainer").style.display = "none";
+      document.getElementById("resultsContainer").style.display = "block";
+    }
+
+    function connect() {
+      var host = document.getElementById("hostInput").value;
+      connection = new WebSocket(host);
+      showOutput();
+      connection.onopen = function () {
+        log("Connected");
+      };
+
+      connection.onerror = function (error) {
+        console.log('WebSocket Error ' + error);
+        log("Error: " + error);
+      };
+
+      connection.onmessage = function (e) {
+        console.log('Server: ' + e.data);
+        log("Server: " + e.data);
+      };
+    }
+  </script>
+</body>
+</html>
