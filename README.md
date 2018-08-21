@@ -1,4 +1,4 @@
 # JSocks
 Javascript Socket Example
 
-<img src="result.png" width="50%"/>
+<img src="results.png" width="50%"/>
