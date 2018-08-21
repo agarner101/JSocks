@@ -1,2 +1,2 @@
-# JsSocks
+# JSocks
 Javascript Socket Example
